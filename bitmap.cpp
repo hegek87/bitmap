@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include <unistd.h>
 
 const static int RED = 0xFF0000;
 const static int BLACK = 0x000000;
@@ -45,11 +44,6 @@ bool setupBMP(std::ofstream& writeFile, char *fileName,
 	header.reserved1 = 0;
 	header.reserved2 = 0;
 	header.offset = 54;
-	std::cout << header.size << std::endl;
-	std::cout << sizeof(char) << std::endl;
-	std::cout << sizeof(short int) << std::endl;
-	std::cout << sizeof(int) << std::endl;
-	std::cout << sizeof(long) << std::endl;
 	
 	//open file
 	writeFile.open(fileName);
