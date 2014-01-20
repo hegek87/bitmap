@@ -95,7 +95,6 @@ int main(int argc, char **argv){
 		fileName = (char *)"primes.bmp";
 	}
 	else{
-		std::cout << "Custom file name" << std::endl;
 		fileName = argv[1];
 	}
 	
@@ -114,7 +113,5 @@ int main(int argc, char **argv){
 	
 	writeFile.close();
 	
-	std::cout << isPrime(10) << std::endl;
-	std::cout << isPrime(11) << std::endl;
 	return 0;
 }
