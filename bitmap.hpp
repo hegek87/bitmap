@@ -1,8 +1,9 @@
 #ifndef BITMAP_H
 #define BITMAP_H
+#include <fstream>
 
-//#define RED		0xFF0000
-//#define BLACK	0X000000
+#define WIDTH 500
+#define HEIGHT 500
 /*
 * char is 1 byte
 * short int is 2 bytes
@@ -34,5 +35,6 @@ struct bmpInfoHeader{
 };
 
 bool isPrime(int);
-int createBMP(char *, char *, int, int);
+bool setupBMP(std::ofstream&, char *, int, int);
+bool createBMP(std::ofstream&, char *, char *, int, int);
 #endif
