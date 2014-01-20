@@ -34,4 +34,5 @@ struct bmpInfoHeader{
 };
 
 bool isPrime(int);
+int createBMP(char *, char *, int, int);
 #endif
