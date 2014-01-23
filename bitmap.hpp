@@ -2,8 +2,8 @@
 #define BITMAP_H
 #include <fstream>
 
-#define WIDTH 500
-#define HEIGHT 500
+#define WIDTH 1000
+#define HEIGHT 1000
 /*
 * char is 1 byte
 * short int is 2 bytes
