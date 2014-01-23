@@ -3,9 +3,6 @@
 #include <fstream>
 #include <cmath>
 
-const static int RED = 0xFF0000;
-const static int BLACK = 0x000000;
-
 bool isPrime(int p){
 	if(p == 2){ return true; }
 	if(p < 0){ return false; }
@@ -87,31 +84,4 @@ bool createBMP(char *imageData, char *fileName, int width, int height){
 	}
 	writeFile.close();
 	return true;
-}
-
-int main(int argc, char **argv){
-	char *fileName;
-	if(argc != 2){
-		fileName = (char *)"primes.bmp";
-	}
-	else{
-		fileName = argv[1];
-	}
-	
-	std::ofstream writeFile;
-	setupBMP(writeFile, fileName, WIDTH, HEIGHT);
-	for(int i = WIDTH-1; i >= 0; --i){
-		for(int j = HEIGHT-1; j >= 0; --j){
-			if(isPrime(i*WIDTH+j)){
-				writeFile.write((char *)&RED, 3);
-			}
-			else{
-				writeFile.write((char *)&BLACK, 3);
-			}
-		}
-	}
-	
-	writeFile.close();
-	
-	return 0;
 }
