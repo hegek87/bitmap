@@ -48,18 +48,17 @@ Bitmap::Bitmap(int width, int height){
 	this->image.reserve(width*height);
 }
 
-Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead, int width, int height){
+Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead){
 	this->header = head;
 	this->iHeader = iHead;
-	this->iHeader.width = width;
-	this->iHeader.height = height;
-	this->image.reserve(width*height);
+	int pixelCount = this->iHeader.width * this->iHeader.height;
+	this->image.reserve(pixelCount);
 }
 
 /*
 * Assumes image contains all data that should be written to the bmp
 */
-bool Bitmap::createBMP(std::string fileName){
+bool Bitmap::createBMP(char *fileName){
 	std::ofstream writeFile;
 	writeFile.open(fileName);
 	if(!writeFile.is_open()){
@@ -88,11 +87,19 @@ bool Bitmap::createBMP(std::string fileName){
 	writeFile.write((char *)&iHeader.importantColors, 4);	// 4 bytes
 									// 40 bytes written
 	//write image data
+	for(int i = 0; i < iHeader.width*iHeader.height; ++i){
+		image[i].writeColor(writeFile);
+	}
+	writeFile.close();
+	return true;
 }
 	
-
+/*
+* Plots Color rgb to the (x,y) pair on the coordinate axes, 
+* assuming the bottom left is the point (0,0).
+*/
 bool Bitmap::setPixel(int x, int y, Color rgb){
-	image[x*iHead.height + y] = rgb;
+	image[y*iHeader.width + x] = rgb;
 	return true;
 }
 	

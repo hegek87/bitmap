@@ -39,17 +39,12 @@ class Bitmap{
 		
 		std::vector<Color> image;
 	public:
-		Bitmap(bmpHeader, bmpInfoHeader, int, int);
+		Bitmap(bmpHeader, bmpInfoHeader);
 		Bitmap(int, int);
 		
-		bool createBMP(std::string);
+		bool createBMP(char *);
 		bool setPixel(int, int, Color);
 };
-/*
-* char is 1 byte
-* short int is 2 bytes
-* long is 4 bytes
-*/
 
 bool isPrime(int);
 bool setupBMP(std::ofstream&, char *, int, int);

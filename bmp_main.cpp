@@ -1,11 +1,5 @@
 #include "bitmap.hpp"
 
-const static int RED = 0xFF0000;
-const static int BLACK = 0x000000;
-const static int WHITE = 0xFFFFFF;
-const static int BLUE = 0x0000FF;
-const static int GREEN = 0x00FF00;
-
 int main(int argc, char **argv){
 	char *fileName;
 	if(argc != 2){
@@ -15,32 +9,43 @@ int main(int argc, char **argv){
 		fileName = argv[1];
 	}
 	
-	std::ofstream writeFile;
-	setupBMP(writeFile, fileName, WIDTH, HEIGHT);
-	for(int i = WIDTH-1; i >= 0; --i){
-		for(int j = HEIGHT-1; j >= 0; --j){
+	Bitmap bmp(WIDTH, HEIGHT);
+	/*
+	for(int i = 0; i < WIDTH; ++i){
+		for(int j = 0; j < HEIGHT; ++j){
+			bmp.setPixel(i, j, Color(YELLOW));
+		}
+	}
+	if(!bmp.createBMP(fileName)){
+		std::cout << "FAILED TO CREATE";
+		return -1;
+	}*/
+	
+	for(int i = 0; i < WIDTH; ++i){
+		for(int j = 0; j < HEIGHT; ++j){
 			int temp = i*WIDTH+j;
 			if(isPrime(temp)){
-				writeFile.write((char *)&RED, 3);
+				bmp.setPixel(j, i, Color(RED));
 			}
 			else{
 				if((temp % 9) == 0){
-					writeFile.write((char *)&BLUE, 3);
+					bmp.setPixel(j, i, Color(BLUE));
 				}
 				else if((temp % 5) == 0){
-					writeFile.write((char *)&GREEN, 3);
+					bmp.setPixel(j, i, Color(GREEN));
 				}
 				else if ((temp % 7) == 0){
-					writeFile.write((char *)&WHITE, 3);
+					bmp.setPixel(j, i, Color(WHITE));
 				}
 				else{
-					writeFile.write((char *)&BLACK, 3);
+					bmp.setPixel(j, i, Color(BLACK));
 				}
 			}
 		}
 	}
-	
-	writeFile.close();
-	
+	if(!bmp.createBMP(fileName)){
+		std::cout << "FAILED TO CREATE" << std::endl;
+		return -1;
+	}
 	return 0;
 }
