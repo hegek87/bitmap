@@ -1,9 +1,24 @@
 #ifndef BITMAP_H
 #define BITMAP_H
 #include <fstream>
+#include <vector>
+#include <string>
 
-#define WIDTH 15000
-#define HEIGHT 15000
+#define WIDTH 1000
+#define HEIGHT 1000
+
+class Bitmap{
+	private:
+		struct bmpHeader;
+		struct bmpInfoHeader;
+		
+		std::vector<Color> image;
+	public:
+		Bitmap(bmpHeader, bmpInfoHeader, int, int);
+		Bitmap(int, int);
+		
+		bool createBMP(std::string);
+}
 /*
 * char is 1 byte
 * short int is 2 bytes

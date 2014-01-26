@@ -14,6 +14,12 @@ bool isPrime(int p){
 	return true;
 }
 
+Bitmap::Bitmap(int width, int height){}
+Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead, int width, int height){}
+
+bool Bitmap::createBMP(std::string fileName){}
+	
+
 bool setupBMP(std::ofstream& writeFile, char *fileName,
 						 int width, int height){
 	// create info header
