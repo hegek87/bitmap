@@ -42,11 +42,11 @@ class Bitmap{
 		Bitmap(bmpHeader, bmpInfoHeader);
 		Bitmap(int, int);
 		
+		const bmpHeader& getHeader();
+		const bmpInfoHeader& getIHeader();
 		bool createBMP(char *);
 		bool setPixel(int, int, Color);
 };
 
 bool isPrime(int);
-bool setupBMP(std::ofstream&, char *, int, int);
-bool createBMP(std::ofstream&, char *, char *, int, int);
 #endif
