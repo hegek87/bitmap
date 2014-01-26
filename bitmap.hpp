@@ -3,14 +3,15 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "../color/color.h"
 
 #define WIDTH 1000
 #define HEIGHT 1000
 
 class Bitmap{
 	private:
-		struct bmpHeader;
-		struct bmpInfoHeader;
+		struct bmpHeader header;
+		struct bmpInfoHeader iHeader;
 		
 		std::vector<Color> image;
 	public:
@@ -18,6 +19,7 @@ class Bitmap{
 		Bitmap(int, int);
 		
 		bool createBMP(std::string);
+		bool setPixel(int, int, Color);
 }
 /*
 * char is 1 byte

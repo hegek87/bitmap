@@ -13,11 +13,46 @@ bool isPrime(int p){
 	}
 	return true;
 }
+/*
+* Prepares a bitmap file with default header and info header which is of
+* size width x height. The image data is initially empty.
+*/
+Bitmap::Bitmap(int width, int height){
+	// create info header
+	bmpInfoHeader iHeader;
+	iHeader.iHSize = 40;
+	iHeader.width = width;
+	iHeader.height = height;
+	iHeader.colorPlanes = 1;
+	iHeader.bPerPixel = 24;
+	iHeader.compression = 0;
+	
+	short int rowSize = (((iHeader.bPerPixel*iHeader.width)+31)/32)*4;
+	short int pixelArraySize = rowSize * std::abs(iHeader.height);
+	iHeader.imageSize = pixelArraySize;
+	iHeader.horizRes = 2835;
+	iHeader.vertRes = 2835;
+	iHeader.colorPallette = 0;
+	iHeader.importantColors = 0;
+	
+	// create bitmap header
+	bmpHeader header;
+	header.magic1 = 'B';
+	header.magic2 = 'M';
+	header.size = 54 + pixelArraySize;
+	header.reserved1 = 0;
+	header.reserved2 = 0;
+	header.offset = 54;
+	this->header = header;
+	this->iHeader = iHeader;
+	this->image(width*height);
+}
 
-Bitmap::Bitmap(int width, int height){}
 Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead, int width, int height){}
 
 bool Bitmap::createBMP(std::string fileName){}
+
+bool Bitmap::setPixel(int x, int y, Color rgb){}
 	
 
 bool setupBMP(std::ofstream& writeFile, char *fileName,
