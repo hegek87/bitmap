@@ -45,14 +45,56 @@ Bitmap::Bitmap(int width, int height){
 	header.offset = 54;
 	this->header = header;
 	this->iHeader = iHeader;
-	this->image(width*height);
+	this->image.reserve(width*height);
 }
 
-Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead, int width, int height){}
+Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead, int width, int height){
+	this->header = head;
+	this->iHeader = iHead;
+	this->iHeader.width = width;
+	this->iHeader.height = height;
+	this->image.reserve(width*height);
+}
 
-bool Bitmap::createBMP(std::string fileName){}
+/*
+* Assumes image contains all data that should be written to the bmp
+*/
+bool Bitmap::createBMP(std::string fileName){
+	std::ofstream writeFile;
+	writeFile.open(fileName);
+	if(!writeFile.is_open()){
+		return false;
+	}
+	//write bmpHeader
+	writeFile << header.magic1;					// 1 byte
+	writeFile << header.magic2;					// 1 byte
+	writeFile.write((char *)&header.size, 4);			// 4 bytes
+	writeFile.write((char *)&header.reserved1, 2);		// 2 bytes
+	writeFile.write((char *)&header.reserved2, 2);		// 2 bytes
+	writeFile.write((char *)&header.offset, 4);		// 4 bytes
+									// 14 bytes written
+	
+	//write bmpInfoHeader
+	writeFile.write((char *)&iHeader.iHSize, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.width, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.height, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.colorPlanes, 2);	// 2 bytes
+	writeFile.write((char *)&iHeader.bPerPixel, 2);		// 2 bytes
+	writeFile.write((char *)&iHeader.compression, 4);	// 4 bytes
+	writeFile.write((char *)&iHeader.imageSize, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.horizRes, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.vertRes, 4);		// 4 bytes
+	writeFile.write((char *)&iHeader.colorPallette, 4);	// 4 bytes
+	writeFile.write((char *)&iHeader.importantColors, 4);	// 4 bytes
+									// 40 bytes written
+	//write image data
+}
+	
 
-bool Bitmap::setPixel(int x, int y, Color rgb){}
+bool Bitmap::setPixel(int x, int y, Color rgb){
+	image[x*iHead.height + y] = rgb;
+	return true;
+}
 	
 
 bool setupBMP(std::ofstream& writeFile, char *fileName,

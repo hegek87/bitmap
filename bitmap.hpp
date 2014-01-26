@@ -7,25 +7,6 @@
 
 #define WIDTH 1000
 #define HEIGHT 1000
-
-class Bitmap{
-	private:
-		struct bmpHeader header;
-		struct bmpInfoHeader iHeader;
-		
-		std::vector<Color> image;
-	public:
-		Bitmap(bmpHeader, bmpInfoHeader, int, int);
-		Bitmap(int, int);
-		
-		bool createBMP(std::string);
-		bool setPixel(int, int, Color);
-}
-/*
-* char is 1 byte
-* short int is 2 bytes
-* long is 4 bytes
-*/
 // 14 bytes
 struct bmpHeader{
 	char magic1;		// 'B' - magic number
@@ -50,6 +31,25 @@ struct bmpInfoHeader{
 	long colorPallette;	// 0 (2^n) - number of colors available
 	long importantColors;	// 0 - all colors are important
 };
+
+class Bitmap{
+	private:
+		bmpHeader header;
+		bmpInfoHeader iHeader;
+		
+		std::vector<Color> image;
+	public:
+		Bitmap(bmpHeader, bmpInfoHeader, int, int);
+		Bitmap(int, int);
+		
+		bool createBMP(std::string);
+		bool setPixel(int, int, Color);
+};
+/*
+* char is 1 byte
+* short int is 2 bytes
+* long is 4 bytes
+*/
 
 bool isPrime(int);
 bool setupBMP(std::ofstream&, char *, int, int);
