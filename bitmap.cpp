@@ -17,7 +17,7 @@ bool isPrime(int p){
 * Prepares a bitmap file with default header and info header which is of
 * size width x height. The image data is initially empty.
 */
-Bitmap::Bitmap(int width, int height){
+Bitmap::Bitmap(int width, int height) : image(width*height){
 	// create info header
 	bmpInfoHeader iHeader;
 	iHeader.iHSize = 40;
@@ -45,15 +45,12 @@ Bitmap::Bitmap(int width, int height){
 	header.offset = 54;
 	this->header = header;
 	this->iHeader = iHeader;
-	this->image.reserve(width*height);
 }
 
-Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead){
-	this->header = head;
-	this->iHeader = iHead;
-	int pixelCount = this->iHeader.width * this->iHeader.height;
-	this->image.reserve(pixelCount);
-}
+Bitmap::Bitmap(bmpHeader head, bmpInfoHeader iHead) : 
+		header(head), 
+		iHeader(iHead),
+		image(this->iHeader.width * this->iHeader.height){}
 
 /*
 * Assumes image contains all data that should be written to the bmp
